@@ -1,0 +1,5 @@
+{
+    "mongoUri": "mongodb+srv://Dmytro:1234@cluster0.pix6q.mongodb.net/Dmytro?retryWrites=true&w=majority",
+    "port": 5000,
+    "jwtSecret": "dmytroserdiukov"
+}
