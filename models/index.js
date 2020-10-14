@@ -26,8 +26,14 @@ export const Apartment = model('Apartment',
         description: String,
         price: String,
         rooms: String,
-        //associated time slots:dsasdasdasd
-        // image: Buffer, 
+        timeSlots: {
+            start: String,
+            end: String
+        },
+        image: {
+            data: Buffer,
+            contentType: String
+        }
     })
 )
 
@@ -35,31 +41,42 @@ export const Voucher = model('Voucher',
     new Schema({
         name: String,
         description: String,
-        // image: Image,
+        // image: {
+        //     data: Buffer,
+        //     contentType: String
+        // },
         price: String,
         variant: String,
-        quantity: String
+        quantity: Number
     })
 )
 
 export const Order = model('Order',
     new Schema({
+        name: String,
+        description: String,
         price: String,
-        rooms: String,
-        buyer: {
-            firstName: String,
-            lastName: String
-        }
+        description: String,
+        quantity: Number,
+        variant: String
+        // buyer: {
+        //     firstName: String,
+        //     lastName: String,
+        //     email: String
+        // }
     })
 )
 
 export const Booking = model('Booking',
     new Schema({
+        name: String,
+        description: String,
         price: String,
         rooms: String,
-        buyer: {
-            firstName: String,
-            lastName: String
-        }
+        // buyer: {
+        //     firstName: String,
+        //     lastName: String,
+        //     email: String
+        // }
     })
 )

@@ -35,8 +35,10 @@ router.get('/sellers',
   async (req, res) => {
     try {
       const sellers = await Seller.find({})
-      const data = JSON.stringify(sellers)
-      res.status(200).json({sellers: data})
+      console.log(sellers)
+      const data = {}
+      // const data = JSON.stringify(sellers)
+      res.status(200).json({data: sellers})
     } catch (e) {
       console.log(e)
     }
@@ -72,7 +74,13 @@ router.post('/login',
     //   {expiresIn: '1h'}
     // )
     // res.status(201).json({token, userId: user.id})
-    res.status(201).json({message:"пользователь авторизован", status: true})
+    const data = {
+      firstname: user.firstName,
+      lastname: user.lastName,
+      email: user.email,
+      password: user.password
+    }
+    res.status(201).json({message:"пользователь авторизован", data, status: true})
 
     } catch (e) {
       res.status(500).json({message: 'Что-то пошло не так'})

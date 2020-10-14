@@ -1,6 +1,7 @@
 import React, { useState, createRef } from 'react'
 import { TextField } from '@material-ui/core'
 import axios from 'axios'
+import {bookApart} from '../../api/apartsAPI'
 
 const UpdateFormFields = ({switchForm, id, updateItem}) => {
   const nameRef = createRef()
@@ -28,7 +29,7 @@ const UpdateFormFields = ({switchForm, id, updateItem}) => {
       rooms: roomsRef.current.value,
     }
     console.log(data)
-    // updateItem(data)
+    updateItem(data)
   }
 
   const upload = ({ target: { files } }) => {
@@ -106,6 +107,14 @@ const Apart = (props) => {
   rooms, id, updateItem, authIn, image} = props
   const [updateForm, switchForm] = useState(false)
 
+  const bookApartItem = () => {
+    console.log(id)
+    const data = {
+      _id: id,
+    }
+    bookApart(data)
+  }
+
  return (
   updateForm ? <UpdateFormFields
     switchForm = {switchForm}
@@ -122,7 +131,7 @@ const Apart = (props) => {
     <div>{rooms}</div>
     {
      authIn ? <button onClick={() => {switchForm(true)}}>Edit</button>
-      : <button>Book</button>
+      : <button onClick={bookApartItem}>Book</button>
     }
 </div>)
 }

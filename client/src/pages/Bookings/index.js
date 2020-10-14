@@ -1,17 +1,18 @@
 import React from 'react'
 
-const Booking = ({price, rooms, buyer}, ...props) => {
-  return <div>
+const Booking = ({price, rooms, name, description}, ...props) => {
+  return <div style={{border: "1px solid black", margin: "5px"}}>
+    <div>
+      <span>name: {name}</span>
+    </div>
     <div>
       <span>price: {price}</span>
     </div>
     <div>
-      <span>rooms: {rooms}</span>
+      <span>derscription: {description}</span>
     </div>
     <div>
-      <span>{buyer.firstName}</span>
-      {' '}
-      <span>{buyer.lastName}</span>
+      <span>rooms: {rooms}</span>
     </div>
   </div>
 }
@@ -19,12 +20,13 @@ const Booking = ({price, rooms, buyer}, ...props) => {
 export default function Bookings({data}){
   return <div>
     {data === null? "Ничего не забронировано":
-    data.map( (el, i) => (
+    data.data.map( (el, i) => (
     <Booking 
     key = {i}
+    name = {el.name}
     price = {el.price}
+    description = {el.description}
     rooms = {el.rooms}
-    buyer = {el.buyer}
     />))}
     
   </div>

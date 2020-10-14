@@ -1,22 +1,50 @@
 import React, { useState, createRef } from 'react'
 import { useEffect } from 'react'
-import {getVouchers, createVoucher} from '../../api/vouchersAPI'
+import {getVouchers, createVoucher, buyVoucher} from '../../api/vouchersAPI'
 import axios from 'axios'
 import { TextField, FormControl, InputLabel, Select, MenuItem, makeStyles } from '@material-ui/core'
+import { connect } from 'react-redux'
 
-const Voucher = props => {
-  return <div>
-    Voucher {props.children}
+const Voucher = ({name, id, variant, authIn,quantity ,price}, ...props) => {
+  const buyItem = (e) => {
+    const data = {
+      _id: id,
+    }
+    buyVoucher(data)
+  }
+
+
+  return <div style = {{border: "1px solid black", margin: "5px"}}>
+    <div>{id}</div>
+    <div>{name}</div>
+    <div>{variant}</div>
+    <div>{price}</div>
+    <div>{quantity}</div>
+    {
+    authIn ? 
+    <button>
+      Edit
+    </button>
+    : 
+    <button onClick = {buyItem}>
+      Buy
+    </button>
+    }
   </div>
 }
 
-const Vouchers = ({vouchers}, ...props) => {
-  console.log('vouchers',vouchers)
+const Vouchers = ({vouchers, authIn}, ...props) => {
+  // console.log('vouchers',vouchers)
   return <div>
     {vouchers === null? "Ваучеров нет" : vouchers.map( (el, i) => (
-      <Voucher key={i}>
-        {el.name}
-      </Voucher> 
+      <Voucher key={i}
+        id = {el._id}
+        name = {el.name}
+        variant = {el.variant}
+        price = {el.price}
+        quantity = {el.quantity}
+        authIn = {authIn}
+      />
     )) }
   </div>
 } 
@@ -31,12 +59,11 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const VouchersContainer = (props) => {
+const VouchersContainer = ({authIn}, ...props) => {
   const [items, setItems] = useState(null)
   const name = createRef()
   const description = createRef()
   const price = createRef()
-  const variant = createRef()
   const quantity = createRef()
 
   const createVoucherItem = () => {
@@ -44,7 +71,6 @@ const VouchersContainer = (props) => {
       name: name.current.value,
       description: description.current.value,
       price: price.current.value,
-      // variant: variant.current.value,
       variant: type,
       quantity: quantity.current.value
     }
@@ -67,6 +93,8 @@ const VouchersContainer = (props) => {
 
   return <>
   <div>
+    { authIn ? 
+    <div>
     <TextField inputRef={name} id="standard-basic" label="name" />
     <TextField inputRef={description} id="standard-basic" label="description" />
     <TextField inputRef={price} id="standard-basic" label="price" />
@@ -87,10 +115,20 @@ const VouchersContainer = (props) => {
       </FormControl>
     <TextField inputRef={quantity} id="standard-basic" label="quantity" />
     <button onClick={createVoucherItem}>Create</button>
-  </div>
+    </div>: null
 
-    <Vouchers vouchers = {items} />
+    }
+    <Vouchers 
+    authIn = {authIn}
+    vouchers = {items}
+    />
+    </div>
   </>
 }
 
-export default VouchersContainer
+let props = state => ({
+  authIn: state.auth.authIn,
+
+})
+
+export default connect(props, null)(VouchersContainer)

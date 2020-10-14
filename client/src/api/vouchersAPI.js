@@ -8,3 +8,7 @@ export const getVouchers = async() => {
 export const createVoucher = async(data) => {
   await axios.post('http://localhost:5000/vouchers/create', data)
 }
+
+export const buyVoucher = async(data) => {
+  await axios.post('http://localhost:5000/vouchers/buy', data)
+}

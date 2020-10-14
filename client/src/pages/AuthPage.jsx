@@ -51,7 +51,7 @@ function SignIn(props) {
         password: passwordRef.current.value
       }
       const res = await axios.post("http://localhost:5000/auth/login", data)
-      .then(data => setStatus(data.data.status))
+      .then(data => setStatus(data.data.data, data.data.status))
       props.setAuth(requestStatus)
     } catch (e) {
       console.log(e)

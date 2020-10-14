@@ -1,5 +1,5 @@
 import {Router} from 'express'
-import {Apartment} from '../models'
+import {Apartment, Booking} from '../models'
 import { Types } from 'mongoose'
 const router = Router()
 
@@ -7,6 +7,33 @@ router.get('/items', async(req, res) => {
     const apartments = await Apartment.find({})
     res.status(200).json({data: apartments})
 })
+
+router.post('/book',
+    async(req, res) => {
+        try{
+            const {_id} = req.body
+            console.log(_id)
+            const apart = await Apartment.findById(_id)
+            console.log('apart',apart)
+            const same = await Booking.findById(_id)
+            if (same) res.status(400).json("Такой заказ уже есть")
+            else {
+                const booking = new Booking({
+                    name: apart.name,
+                    description: apart.description,
+                    price: apart.price,
+                    rooms: apart.rooms
+                })
+                await booking.save( (err, res) => {
+                    if (err) console.log(err)
+                    else console.log(res)
+                })
+            }
+            res.status(201).json("Apart booked")
+        } catch(e) {
+            console.log(e)
+        }
+    })
 
 router.put('/update',
     async (req, res) => {

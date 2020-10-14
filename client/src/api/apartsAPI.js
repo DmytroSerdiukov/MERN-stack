@@ -5,6 +5,10 @@ export const getApartments = async() => {
     return response.data.data      
 }
 
+export const bookApart = async(apartId) => {
+    await axios.post("http://localhost:5000/aparts/book", apartId)
+}
+
 export const sendApartData = async(values) => {
     await axios.post("http://localhost:5000/aparts/create", values)
 }

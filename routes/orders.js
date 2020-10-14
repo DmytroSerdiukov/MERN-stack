@@ -16,15 +16,16 @@ router.get('/items', async(req, res) => {
 
 router.post('/create',
   async(req, res) => {
-    const {price, rooms, buyer} = req.body
+    const {name,price, rooms, buyer} = req.body
     const order = new Order({
         _id: new Types.ObjectId(),
+        name: name,
         price: price,
         rooms: rooms,
-        buyer: {
-            firstName: buyer.firstName,
-            lastName: buyer.lastName
-        }
+        // buyer: {
+        //     firstName: buyer.firstName,
+        //     lastName: buyer.lastName
+        // }
     })
     await order.save( (err, result) => {
         if (err) console.log(err)

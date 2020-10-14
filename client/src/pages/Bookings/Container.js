@@ -9,8 +9,7 @@ const Container = (props) => {
   const getData = async() => {
     try{
       const res = await getBookings()
-      console.log(res)
-      setBookings(bookings)
+      setBookings(res.data)
     } catch(e) {
       console.log(e)
     }
@@ -18,7 +17,7 @@ const Container = (props) => {
 
   useEffect( () => {
     getData()
-  })
+  }, [])
 
   return <div>
     {/* <button onClick={createBooking}>Create</button> */}
