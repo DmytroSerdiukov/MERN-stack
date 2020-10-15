@@ -1,10 +1,14 @@
 import React from 'react';
 import {BrowserRouter} from 'react-router-dom'
 import Routes from './routes'
-import store from './redux'
 import {Provider, connect} from 'react-redux'
 
-function App({authIn}, ...props) {
+type Props = {
+  authIn: boolean
+}
+
+const App: React.FC<Props> = props => {
+  const {authIn} = props
   const routes = Routes()
   return (
     <BrowserRouter>
@@ -15,7 +19,9 @@ function App({authIn}, ...props) {
   );
 }
 
-let props = state => ({
+
+
+let props = (state: any) => ({
   authIn: state.auth.authIn
 })
 
