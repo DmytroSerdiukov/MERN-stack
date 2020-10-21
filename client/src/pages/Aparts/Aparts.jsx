@@ -2,6 +2,12 @@ import React, { useState, createRef } from 'react'
 import { TextField } from '@material-ui/core'
 import axios from 'axios'
 import {bookApart} from '../../api/apartsAPI'
+import BuyForm from './BuyForm'
+import FormWrapper from '../../common/BuyForm'
+
+
+const Component = BuyForm()
+const Form = FormWrapper()
 
 const UpdateFormFields = ({switchForm, id, updateItem}) => {
   const nameRef = createRef()
@@ -106,6 +112,7 @@ const Apart = (props) => {
   const {name, description, price, 
   rooms, id, updateItem, authIn, image} = props
   const [updateForm, switchForm] = useState(false)
+  const [open, setOpen] = useState(false)
 
   const bookApartItem = () => {
     console.log(id)
@@ -131,8 +138,16 @@ const Apart = (props) => {
     <div>{rooms}</div>
     {
      authIn ? <button onClick={() => {switchForm(true)}}>Edit</button>
-      : <button onClick={bookApartItem}>Book</button>
+      : <button 
+      onClick = {() => setOpen(true)}
+      // onClick={bookApartItem}
+      >Book</button>
     }
+    <Form open = {open} 
+      setOpen = {() => setOpen(false)}
+    >
+      <BuyForm />
+    </Form>
 </div>)
 }
 
