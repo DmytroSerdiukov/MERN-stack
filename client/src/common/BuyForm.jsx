@@ -31,8 +31,8 @@ const BuyForm = Element => ({open, setOpen, children}) => {
       <div style={overlay}>
         <div style={styles}>
           {children}
+          <button onClick = {() => setOpen(false)}>close</button>
         </div>
-        <button onClick = {() => setOpen(false)}>close</button>
       </div>
     </>, 
     document.getElementById("portal")

@@ -4,8 +4,14 @@ import {getVouchers, createVoucher, buyVoucher} from '../../api/vouchersAPI'
 import axios from 'axios'
 import { TextField, FormControl, InputLabel, Select, MenuItem, makeStyles } from '@material-ui/core'
 import { connect } from 'react-redux'
+import FormWrapper from '../../common/BuyForm'
+import BuyForm from './BuyForm'
+
+const Form = FormWrapper()
 
 const Voucher = ({name, id, variant, authIn,quantity ,price}, ...props) => {
+  const [open, setOpen] = useState(false)
+  
   const buyItem = (e) => {
     const data = {
       _id: id,
@@ -26,10 +32,21 @@ const Voucher = ({name, id, variant, authIn,quantity ,price}, ...props) => {
       Edit
     </button>
     : 
-    <button onClick = {buyItem}>
+    <button 
+      onClick = {() => setOpen(true)}
+    >
       Buy
     </button>
+    // <button onClick = {buyItem}>
+    //   Buy
+    // </button>
     }
+    <Form
+      open = {open} 
+      setOpen = {() => setOpen(false)}
+    >
+      <BuyForm />
+    </Form>
   </div>
 }
 
